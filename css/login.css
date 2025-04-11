@@ -1,0 +1,249 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+body{
+	width:100%;
+	min-height:670px;
+	height:100%;
+	overflow:hidden;
+	/*background:url(../images/TheCitySchool.jpg) no-repeat;*/
+	background:url(../images/mHi3PDG.jpg);
+	/*background-size:100% 100%;*/
+	
+}
+.wraper{
+	width:100%;
+	margin:0 auto;
+}
+.slider{
+	width:100%;
+	height:100%;
+	float:left;
+	overflow:hidden;
+}
+.content_wrap{
+	width:90%;
+	margin:0 auto;
+}
+.header{
+	width:100%;
+	float:left;
+	box-sizing:border-box;
+	/*background:#666;*/
+	padding:10px 30px;
+	/*border-bottom:#FFF solid 2px;*/
+}
+.logo{
+	float:left;
+	padding:5px
+}
+.logo img{
+	width:70px;
+}
+.right_header{
+	float:right;
+}
+.social{
+	float:left;
+	padding:5px 0px;
+	padding:10px 0px;
+	/*border:rgba(0,0,255,1) solid 1px;*/
+}
+.social ul{
+	/*float:left;*/
+	display:inline-block;
+	margin-right:15px;
+}
+.icon{
+	text-indent:-9999px;
+	width:40px;
+	height:40px;
+	display:inline-block;
+}
+.icon a:link{
+	display:block;
+	width:40px;
+	height:40px;
+}
+.fb_icon{
+	background:url(../images/icons/social_icon_sprites.png) 0px 0px no-repeat;
+}
+.fb_icon:hover{
+	background:url(../images/icons/social_icon_sprites.png) 0px -43px no-repeat;
+}
+.t_icon{
+	background:url(../images/icons/social_icon_sprites.png) -45px 0px no-repeat;
+}
+.t_icon:hover{
+	background:url(../images/icons/social_icon_sprites.png) -45px -43px no-repeat;
+}
+.in_icon{
+	background:url(../images/icons/social_icon_sprites.png) -90px 0px no-repeat;
+}
+.in_icon:hover{
+	background:url(../images/icons/social_icon_sprites.png) -89px -43px no-repeat;
+}
+.g_icon{
+	background:url(../images/icons/social_icon_sprites.png) -135px 0px no-repeat;
+}
+.g_icon:hover{
+	background:url(../images/icons/social_icon_sprites.png) -134px -43px no-repeat;
+}
+#usr_search{
+	width:300px;
+	height:40px;
+	font-weight:bold;
+	font-size:14px;
+	color:#FFF;
+	border:#000 solid 2px;
+	border-radius:5px;
+	background:none;
+	text-transform:uppercase;
+	padding:0px 10px;
+	margin-left:30px;
+	
+	background:url(../images/search_icon.png) right center no-repeat;
+	background-size:40px 40px;
+}
+.body_sec{
+	width:100%;
+	float:left;
+}
+.login_form_container{
+	width:100%;
+	margin:0 auto;
+	margin-top:5%;
+	background:rgba(0,0,0,0.6);
+	border:#000 solid 3px;
+	
+	border-radius:10px;
+}
+.Header_login_form{
+	border-bottom:#FFF solid 3px;
+	padding:10px 5px;
+	background:#000;
+}
+.Header_login_form p{
+	width:100%;
+	color:#FFF200;
+	font-size:18px;
+	text-transform:capitalize;
+}
+p .heading{
+	color:#FFF;
+	font-size:2em;
+}
+.body_login_form{
+	padding:10px 20px;
+	text-align:center;
+}
+.body_login_form select{
+	width:90%;
+	border:none;
+	height:40px;
+	font-weight:bold;
+	font-size:14px;
+	margin-top:10px;
+	margin-bottom:20px;
+	color:#FFF;
+	border:#FFF solid 2px;
+	border-radius:5px;
+	background:none;
+	text-transform:uppercase;
+}
+.body_login_form select option{
+	color:#FFF;
+	border:#FFF solid 2px;
+	background:#999 /*rgba(1,17,95,1)*/;
+	padding:05px 05px;
+}
+.body_login_form h1{
+	font-size:1.5em;
+	color:#FFF;
+	text-transform:uppercase;
+	margin-bottom:20px;
+	/*text-align:center;*/
+}
+.body_login_form input{
+	width:90%;
+	height:38px;
+	padding-left:5px;
+	margin-bottom:20px;
+	font-size:14px;
+	color:#FFF;
+	border:#FFF solid 2px;
+	border-radius:5px;
+	background:none;
+}
+#text_login{
+	background:url(../images/user_icon01.png) right center no-repeat;
+	background-size:40px 40px;
+}
+#text_password{
+	background:url(../images/pass_icon01.png) right no-repeat;
+	background-size:40px 40px;
+}
+.body_login_form input[type="submit"]{
+	width:94%;
+	border:none;
+	height:40px;
+	font-weight:bold;
+	font-size:18px;
+	margin-top:10px;
+	cursor:pointer;
+	
+	background: -webkit-linear-gradient(white, #666); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(white,#666); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(white, #666); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(white,#666); /* Standard syntax */
+}
+.body_login_form input[type="submit"]:hover{
+	
+	background: -webkit-linear-gradient(#666, white); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#666, white); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#666, white); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#666, white); /* Standard syntax */
+}

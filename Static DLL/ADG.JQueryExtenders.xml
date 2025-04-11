@@ -1,0 +1,456 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ADG.JQueryExtenders</name>
+    </assembly>
+    <members>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuState">
+            <summary>
+            Represents an Impromptu state.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuState.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuState"/> class.
+            </summary>
+            <param name="html">The text or HTML to display in the prompt.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuState.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuState"/> class.
+            </summary>
+            <param name="html">The text or HTML to display in the prompt.</param>
+            <param name="submit">A function to be called when the prompt is submitted.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuState.#ctor(System.String,System.String,ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuState"/> class.
+            </summary>
+            <param name="html">The text or HTML to display in the prompt.</param>
+            <param name="submit">A function to be called when the prompt is submitted.</param>
+            <param name="buttons">An <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection"/> containing the buttons to be displayed.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuState.#ctor(System.String,System.String,ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuState"/> class.
+            </summary>
+            <param name="html">The text or HTML to display in the prompt.</param>
+            <param name="submit">A function to be called when the prompt is submitted.</param>
+            <param name="buttons">An <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection"/> containing the buttons to be displayed.</param>
+            <param name="focus">The index of the button to receive focus.</param>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuState.Html">
+            <summary>
+            A string of html or text for the content.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuState.Submit">
+            <summary>
+            A function to be called when the prompt is submitted. Default: function(){ return true; }.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuState.Focus">
+            <summary>
+            Index of the button to focus(0,1,2..). Default: 0.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuState.Buttons">
+            <summary>
+            An object containing the text and values of each button the user may click. Default: { Ok : true }.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection">
+            <summary>
+            A collection of buttons for an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/>.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Utilities.StringExtensionMethods">
+            <summary>
+            A collection of extension methods for <see cref="T:System.String"/> objects.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Utilities.StringExtensionMethods.GetTypedValue(System.String)">
+            <summary>
+            Attempts to infer the type of the given string and return a typed object (bool, int, double, or string).
+            </summary>
+            <param name="stringValue">The <see cref="T:System.String"/> to be evaluated.</param>
+            <returns>An <see cref="T:System.Object"/> containing a bool, int, double, or string depending on the value.</returns>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper">
+            <summary>
+            The string used to wrap an Impromptu prompt javascript callout.
+            </summary>
+        </member>
+        <member name="F:ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper.None">
+            <summary>
+            No text is added to the raw Impromptu javascript.
+            </summary>
+        </member>
+        <member name="F:ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper.DocumentReady">
+            <summary>
+            The Imromptu prompt javascript is wrapped within a $document.ready() callout.  Equivalent to a Custom wrapper
+            with the format string "$(document).ready(function() {{ {0}; }});".
+            </summary>
+        </member>
+        <member name="F:ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper.Custom">
+            <summary>
+            A custom format string is specified.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt">
+            <summary>
+            Represents an Impromptu prompt.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> class.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> class.
+            </summary>
+            <param name="useConfigDefaults">If true, any default values specified in web.config are used.  If false, no default values are used.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> class.
+            </summary>
+            <param name="message">The text or HTML to display in the prompt.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> class.
+            </summary>
+            <param name="message">The text or HTML to display in the prompt.</param>
+            <param name="useConfigDefaults">If true, any default values specified in web.config are used.  If false, no default values are used.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.Validate">
+            <summary>
+            Validates the ImpromptuPrompt (either a message or states are specified, and both are not specified).
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.GenerateScript">
+            <summary>
+            Generate Impromptu script for this object.
+            </summary>
+            <returns>A string with the javascript to generate the desired popup.</returns>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.GenerateScript(ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper)">
+            <summary>
+            Generate Impromptu script for this object.
+            </summary>
+            <param name="wrapper">Specifies the wrapper for the Impromptu script</param>
+            <returns>A string with the javascript to generate the desired popup.</returns>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.GenerateScript(ADG.JQueryExtenders.Impromptu.ImpromptuScriptWrapper,System.String)">
+            <summary>
+            Generate Impromptu script for this object.
+            </summary>
+            <param name="wrapper">Specifies the wrapper for the Impromptu script.</param>
+            <param name="format">Format string for use with a custom wrapper.</param>
+            <returns>A string with the javascript to generate the desired popup.</returns>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.Message">
+            <summary>
+            A string of html or text for the content.  A Message cannot be defined if States are defined.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.States">
+            <summary>
+            States for the prompt.  States cannot be defined if a Message is defined.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt.Options">
+            <summary>
+            Options for displaying the prompt.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuStateCollection">
+            <summary>
+            A dictionary of <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuState"/> objects.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.Configuration.ImptomptuConfigurationButtonCollection">
+            <summary>
+            A class to specify default options for an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuButtonCollection"/> in web.config.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.Configuration.ImptomptuConfigurationButtonCollection.CreateNewElement">
+            <summary>
+            Creates a new <see cref="T:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton"/>
+            </summary>
+            <returns>A new <see cref="T:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton"/></returns>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.Configuration.ImptomptuConfigurationButtonCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            Returns the Key for a given ConfigurationElement
+            </summary>
+            <param name="element">A <see cref="T:System.Configuration.ConfigurationElement"/></param>
+            <returns>An <see cref="T:System.Object"/> containing the Key for the given element.</returns>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImptomptuConfigurationButtonCollection.Item(System.Int32)">
+            <summary>
+            An indexer for the collection
+            </summary>
+            <param name="index">THe index of the value to return.</param>
+            <returns>The <see cref="T:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton"/> at the given index.</returns>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuHelper">
+            <summary>
+            A collection of helper methods to register the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(System.String)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="message">The text or HTML to be displayed in the prompt.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(System.String,System.Int32)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="message">The text or HTML to be displayed in the prompt.</param>
+            <param name="timeout">The number of milliseconds until the prompt automatically closes. Default: 0.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(System.String,System.Int32,System.String)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="message">The text or HTML to be displayed in the prompt.</param>
+            <param name="timeout">The number of milliseconds until the prompt automatically closes. Default: 0.</param>
+            <param name="prefix">A prefix to be used for all css classes and html object id's. Default: 'jqi'.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="message">The text or HTML to be displayed in the prompt.</param>
+            <param name="timeout">The number of milliseconds until the prompt automatically closes. Default: 0.</param>
+            <param name="prefix">A prefix to be used for all css classes and html object id's. Default: 'jqi'.</param>
+            <param name="scriptKey">The key to use when registering the script.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(ADG.JQueryExtenders.Impromptu.ImpromptuPrompt)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="prompt">The <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> to be displayed.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.ShowPrompt(ADG.JQueryExtenders.Impromptu.ImpromptuPrompt,System.String)">
+            <summary>
+            Registers the javascript to display an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="prompt">The <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> to be displayed.</param>
+            <param name="scriptKey">The key to use when registering the script.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuHelper.RegisterPopupScript(System.String,System.String)">
+            <summary>
+            Internal method to register javascript on a web form.  The script is registered through a
+            <see cref="T:System.Web.UI.ScriptManager"/> if available, otherwise through the <see cref="T:System.Web.UI.Page"/>.
+            </summary>
+            <param name="popupScript">The script to be registered.</param>
+            <param name="scriptKey">The key to use when registering the script.</param>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton">
+            <summary>
+            A class to specify default options for an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> button in web.config.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton.Key">
+            <summary>
+            The displayed text for the button.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationButton.Value">
+            <summary>
+            The value of the button.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.ImpromptuOptions">
+            <summary>
+            Represents a set of Impromptu options.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuOptions"/> class.
+            </summary>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuOptions"/> class.
+            </summary>
+            <param name="useConfigDefaults">If true, any default values specified in web.config are used.  If false, no default values are used.</param>
+        </member>
+        <member name="M:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.ValidateSpeed(System.String,System.String)">
+            <summary>
+            Validates speed values ("slow", "fast", or a number).
+            </summary>
+            <param name="value">The value to be validated.</param>
+            <param name="parameter">The parameter being evaluated.</param>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Loaded">
+            <summary>
+            A function to be called when the prompt is fully loaded Default: function(){}.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Submit">
+            <summary>
+            A function to be called when the prompt is submitted. Default: function(){ return true; }.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Callback">
+            <summary>
+            A function to be called when the prompt is submitted and removed. Default: function(){}.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Buttons">
+            <summary>
+            An object containing the text and values of each button the user may click. Default: { Ok : true }.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Prefix">
+            <summary>
+            A prefix to be used for all css classes and html object id's. Default: "jqi".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Focus">
+            <summary>
+            Index of the button to focus(0,1,2..). Default: 0.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.ZIndex">
+            <summary>
+            zIndex to apply to the prompt. Default: 999.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.UseIFrame">
+            <summary>
+            Will use an iframe for the overlay in IE6 to cover up &lt;select&gt;. Default: false.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Top">
+            <summary>
+            Distance from the top of the screen the prompt will be Default: 15%.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Opacity">
+            <summary>
+            The prefered opacity of the transparent layer placed over the container. Default: 0.6.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.OverlaySpeed">
+            <summary>
+            The prefered speed of the fadeIn and fadeOut of the overlay ("slow", "fast", number) Default: "slow".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.PromptSpeed">
+            <summary>
+            The prefered opacity of the showing of the prompt ("slow", "fast", number). Default: "fast".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Show">
+            <summary>
+            Name of the jQuery method to animate the entrance of the prompt("show","fadeIn","slideDown"). Default: "fadeIn".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Persistent">
+            <summary>
+            If the prompt should close when the fade is clicked (true doesn't close). Default: true.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.ImpromptuOptions.Timeout">
+            <summary>
+            The number of milliseconds until the prompt automatically closes. Default: 0.
+            </summary>
+        </member>
+        <member name="T:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions">
+            <summary>
+            A class to specify default options for an <see cref="T:ADG.JQueryExtenders.Impromptu.ImpromptuPrompt"/> in web.config.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Loaded">
+            <summary>
+            A function to be called when the prompt is fully loaded Default: function(){}.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Submit">
+            <summary>
+            A function to be called when the prompt is submitted. Default: function(){ return true; }.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Callback">
+            <summary>
+            A function to be called when the prompt is submitted and removed. Default: function(){}.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Buttons">
+            <summary>
+            An object containing the text and values of each button the user may click. Default: { Ok : true }.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Prefix">
+            <summary>
+            A prefix to be used for all css classes and html object id's. Default: "jqi".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Focus">
+            <summary>
+            Index of the button to focus(0,1,2..). Default: 0.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.ZIndex">
+            <summary>
+            zIndex to apply to the prompt. Default: 999.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.UseIFrame">
+            <summary>
+            Will use an iframe for the overlay in IE6 to cover up &lt;select&gt;. Default: false.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Top">
+            <summary>
+            Distance from the top of the screen the prompt will be Default: 15%.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Opacity">
+            <summary>
+            The prefered opacity of the transparent layer placed over the container. Default: 0.6.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.OverlaySpeed">
+            <summary>
+            The prefered speed of the fadeIn and fadeOut of the overlay ("slow", "fast", number) Default: "slow".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.PromptSpeed">
+            <summary>
+            The prefered opacity of the showing of the prompt ("slow", "fast", number). Default: "fast".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Show">
+            <summary>
+            Name of the jQuery method to animate the entrance of the prompt("show","fadeIn","slideDown"). Default: "fadeIn".
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Persistent">
+            <summary>
+            If the prompt should close when the fade is clicked (true doesn't close). Default: true.
+            </summary>
+        </member>
+        <member name="P:ADG.JQueryExtenders.Impromptu.Configuration.ImpromptuConfigurationOptions.Timeout">
+            <summary>
+            The number of milliseconds until the prompt automatically closes. Default: 0.
+            </summary>
+        </member>
+    </members>
+</doc>

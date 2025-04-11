@@ -1,0 +1,77 @@
+   <asp:GridView SkinID="GridView" Runat="server" 
+    CellPadding="1" 
+    cellspacing="0"
+    GridLines="Both"
+    BorderStyle="Solid" 
+    BorderWidth="2" 
+    BorderColor="#D4D4D4"
+    Width="100%">
+    <HeaderStyle forecolor="#FFFFFF" Font-Size="1em" Font-Bold="false" Font-Names="Tahoma" backcolor="#808080"/>
+    <RowStyle forecolor="#6B6A6A" CssClass="trgv1"/>
+    <AlternatingRowStyle forecolor="#6B6A6A" CssClass="trgv2" />
+    <SelectedRowStyle CssClass="tr_select" BackColor="#BAD1EB" />
+   </asp:GridView>
+   
+    <asp:GridView SkinID="GridViewWOAlter" Runat="server" 
+    CellPadding="1" 
+    cellspacing="0"
+    GridLines="Both"
+    BorderStyle="Solid" 
+    BorderWidth="2" 
+    BorderColor="#D4D4D4"
+    Width="100%">
+    <HeaderStyle forecolor="#FFFFFF" Font-Size="1em" Font-Bold="false" Font-Names="Tahoma" backcolor="#808080"/>
+    <RowStyle forecolor="#6B6A6A" />    
+   
+   </asp:GridView>
+   
+   <asp:Menu SkinID="MainNav" runat="server"
+        ForeColor="black"
+        Font-Size="small" 
+        Font-Names="Tahoma"
+        DynamicHorizontalOffset="0" 
+        DynamicVerticalOffset="0"
+        StaticEnableDefaultPopOutImage="true"
+        StaticPopOutImageUrl="~/App_Themes/BlueTheme/Arrow.png" 
+        DynamicPopOutImageUrl="~/App_Themes/BlueTheme/Arrow.png"  Orientation="Horizontal">
+        <StaticMenuItemStyle BorderStyle="solid" BorderWidth="1px" BorderColor="#648ABD" HorizontalPadding="2px" VerticalPadding="3px" Width="9em"/>
+        <StaticHoverStyle BackColor="#E6E6E6" ForeColor="White" />
+        <DynamicMenuItemStyle ForeColor="black" BorderStyle="solid" BorderWidth="1px" Font-Size="small" BorderColor="#648ABD" HorizontalPadding="2px" VerticalPadding="3px" Width="10.5em"/>
+        <DynamicHoverStyle BackColor="#E6E6E6" ForeColor="White"/>
+   </asp:Menu>
+   
+   <asp:Menu SkinID="MainNav2" runat="server"
+    ForeColor="black"
+    Font-Size="small" 
+    Font-Names="Tahoma"
+    DynamicHorizontalOffset="0" 
+    DynamicVerticalOffset="0"
+    StaticEnableDefaultPopOutImage="true"
+    StaticPopOutImageUrl="~/App_Themes/BlueTheme/Arrow.png" 
+    DynamicPopOutImageUrl="~/App_Themes/BlueTheme/Arrow.png"
+    CssClass="Menu-Skin-Horizontal"  Orientation="Horizontal">
+    <StaticMenuItemStyle ForeColor="black" BorderStyle="solid" BorderWidth="1px" BorderColor="#D2D2D2" Width="9em" HorizontalPadding="5" VerticalPadding="4"/>
+    <StaticHoverStyle ForeColor="#008B00" BackColor="White"/>
+    <DynamicMenuItemStyle ForeColor="black" BorderStyle="solid" BorderWidth="1px" Font-Size="small" BorderColor="#D2D2D2" Width="10.5em" HorizontalPadding="5" VerticalPadding="4"/>
+    <DynamicHoverStyle ForeColor="#008B00" BackColor="White"/>
+   </asp:Menu>
+
+ <asp:Menu SkinID="MainNav1" runat="server"
+  StaticEnableDefaultPopOutImage="false"
+  ForeColor="#124500"
+  StaticHoverStyle-ForeColor="#FFFFFF"
+  StaticHoverStyle-BackColor="pink"
+  StaticMenuItemStyle-HorizontalPadding="10"
+  StaticMenuItemStyle-VerticalPadding="2"
+  DynamicMenuStyle-BackColor="pink"
+  DynamicMenuStyle-BorderColor="#165EA9"
+  DynamicMenuStyle-BorderStyle="solid"
+  DynamicMenuStyle-BorderWidth="2"
+  DynamicMenuItemStyle-HorizontalPadding="10"
+  DynamicMenuItemStyle-VerticalPadding="2"
+  DynamicHoverStyle-ForeColor="#FFFFFF"
+  DynamicHoverStyle-BackColor="orange" Orientation="Horizontal">
+  <StaticHoverStyle ForeColor="#FFFFFF"/>
+  <DynamicMenuItemStyle HorizontalPadding="3px" VerticalPadding="3px" width="20px" />
+  <DynamicHoverStyle ForeColor="#FFFFFF"/>
+  </asp:Menu>

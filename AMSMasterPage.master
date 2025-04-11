@@ -1,0 +1,306 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AMSMasterPage.master.cs" Inherits="AMSMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+
+
+    <meta charset="utf-8" />
+    <title>Attendance Management System</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/AMS.css" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+
+    <!-- The JavaScript -->
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-35800216-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        // JavaScript Document
+        $(document).ready(function (e) {
+
+            $('.acordian_header').click(function () {
+                $('.acordian_body').slideToggle("slow", function () {
+                    $('.acordian_header').find('.plus_icon').toggleClass('minus_icon');
+                });
+            });
+
+
+
+
+            $("nav li").has("ul").prepend('<span class="plus_icon">Plus</span>').css("background-color", "#888").attr("title", "Click To Expand");
+
+
+            $("nav li").css("cursor", "pointer");
+
+
+            $('nav li').click(function () {
+                $(this).find('.plus_icon').toggleClass('minus_icon');
+                $(this).find('ul').slideToggle(800);
+            });
+
+
+            /*********Navigation***********/
+
+
+            $('.right_menu_wrap').click(function () {
+                $('.left_menu_wrap').toggle(900);
+                $('.menu_click').toggleClass('menu_click_reverse');
+            });
+
+
+
+
+            $('.close').click(function () {
+                $('.mesg').slideUp("slow");
+                $('.error_mesg').slideUp("slow");
+            });
+            $('.Report_criteria_header input[type="radio"]').click(function () {
+                if ($(this).attr('value') == 'DateRanges') {
+                    $('.monthly').hide();
+                    $('.date_range').show("slow");
+                }
+                else {
+                    if ($(this).attr('value') == 'Monthly') {
+                        $('.date_range').hide();
+                        $('.monthly').show("slow");
+                    }
+                }
+            });
+            $('.Report_criteria_body input[type="checkbox"]').click(function () {
+                $('.employee_list').toggle("slow");
+            });
+            $('.Reoprts_list_footer').click(function () {
+                $('.Reoprts_list_body').slideToggle("slow");
+                $('.Show_reoprt_icon').toggleClass('Show_reoprt_icon_hide');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function toasterOptions() {
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "100",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "show",
+                "hideMethod": "hide"
+            };
+        };
+        function CallToastr(message, success) {
+            toasterOptions();
+            toastr.info(message);
+
+        }
+    </script>
+
+</head>
+<body class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12" ">
+
+            <form id="form1" runat="server" >
+                <asp:ScriptManager ID="ScriptManager1" AsyncPostBackTimeout="3600" runat="server">
+                    <Scripts>
+                    </Scripts>
+                </asp:ScriptManager>
+
+
+                <div class="outer_wrap">
+                    <div class="header fullrow">
+                        <div class="inner_wrap">
+                            <div class="row">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                                    <img src="images/mini_logo.png" alt="Logo" />
+                                </div>
+                                <div class="col-xs-9 col-sm-4 col-md-7">
+                                    <h1>Attendance Management System</h1>
+                                </div>
+                                <div class="col-xs-2 col-sm-4 col-md-4" style="text-align:right;">
+                                    <div class="row">
+                                        <div class="col-8 col-md-9">
+                                              <div class="profile">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p>
+                                        Employee # :
+                                <asp:Label ID="lblEmp" runat="server" Text=""></asp:Label>
+                                    </p>
+
+                                </td>
+
+                                <td style="padding-left: 20px;">
+
+                                    <p>
+                                        Name :
+                                <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
+                                    </p>
+
+                                </td>
+
+ 
+
+
+
+                                <td style="padding-left: 20px;">
+                                    <p>
+                                        Region :
+                                <asp:Label ID="lblRegion" runat="server" Text=""></asp:Label>
+                                    </p>
+
+                                </td>
+
+
+                                <td style="padding-left: 20px;">
+                                    <p>
+                                        Center :
+                                <asp:Label ID="lblCenter" runat="server" Text=""></asp:Label>
+                                    </p>
+
+
+                                </td>
+
+
+                                <td style="padding-left: 20px;">
+                                    <p>
+                                        HOD :
+                                <asp:Label ID="lblHOD" runat="server" Text=""></asp:Label>
+                                    </p>
+
+                                </td>
+
+
+
+
+                            </tr>
+
+                        </table>
+
+
+
+                    </div>
+
+
+
+<%--                                            <div class="acordian">
+                                                <div class="acordian_header">
+                                                    <p>User Profile</p>
+                                                    <p class="plus_icon">Plus</p>
+                                                </div>
+                                                <!--end acordian_header-->
+                                                <div class="acordian_body">
+
+                                                    <p>
+                                                        Employee # :
+                                <asp:Label ID="lblEmp" runat="server" Text=""></asp:Label>
+                                                    </p>
+                                                    <p>
+                                                        Name :
+                                <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
+                                                    </p>
+                                                    <p>
+                                                        Region :
+                                <asp:Label ID="lblRegion" runat="server" Text=""></asp:Label>
+                                                    </p>
+                                                    <p>
+                                                        Center :
+                                <asp:Label ID="lblCenter" runat="server" Text=""></asp:Label>
+                                                    </p>
+
+                                                    <table border="0" cellpadding="0" cellspacing="0" align="center">
+                                                    </table>
+
+
+
+
+                                                </div>
+                                                <!--end acordian_body-->
+                                            </div>--%>
+                                        </div>
+                                        <div class="col-4 col-md-3">
+                                            <div class="logout">
+                                                <asp:Button ID="btnLogOut" CssClass="round_corner btn" runat="server" OnClick="btnLogOut_Click" Text="LogOut" CausesValidation="false" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!--end acordian-->
+
+                        </div>
+                        <!--end inner_wrap-->
+                    </div>
+                    <!--end header-->
+
+
+                    <div class="menu_wrap">
+                        <div class="right_menu_wrap">
+                            <p class="menu_click">Click Here</p>
+                        </div>
+                        <!--end right_menu_wrap-->
+                        <div class="left_menu_wrap" id="div_menu" runat="server">
+                        </div>
+                        <!--end menu_wrap-->
+                    </div>
+                    <!--end menu_wrap-->
+
+                </div>
+
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-5">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

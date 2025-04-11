@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_DataForHODsMorningAttendance" targetNamespace="http://tempuri.org/DS_DataForHODsMorningAttendance.xsd" xmlns:mstns="http://tempuri.org/DS_DataForHODsMorningAttendance.xsd" xmlns="http://tempuri.org/DS_DataForHODsMorningAttendance.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_DataForHODsMorningAttendance" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_DataForHODsMorningAttendance" msprop:Generator_UserDSName="DS_DataForHODsMorningAttendance">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TBL_HODsMorningAttendance" msprop:Generator_UserTableName="TBL_HODsMorningAttendance" msprop:Generator_RowEvArgName="TBL_HODsMorningAttendanceRowChangeEvent" msprop:Generator_TableVarName="tableTBL_HODsMorningAttendance" msprop:Generator_TablePropName="TBL_HODsMorningAttendance" msprop:Generator_RowDeletingName="TBL_HODsMorningAttendanceRowDeleting" msprop:Generator_RowChangingName="TBL_HODsMorningAttendanceRowChanging" msprop:Generator_RowDeletedName="TBL_HODsMorningAttendanceRowDeleted" msprop:Generator_RowEvHandlerName="TBL_HODsMorningAttendanceRowChangeEventHandler" msprop:Generator_TableClassName="TBL_HODsMorningAttendanceDataTable" msprop:Generator_RowChangedName="TBL_HODsMorningAttendanceRowChanged" msprop:Generator_RowClassName="TBL_HODsMorningAttendanceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Sr.No" msprop:Generator_ColumnVarNameInTable="_columnSr_No" msprop:Generator_ColumnPropNameInRow="_Sr_No" msprop:Generator_ColumnPropNameInTable="_Sr_NoColumn" msprop:Generator_UserColumnName="Sr.No" type="xs:int" minOccurs="0" />
+              <xs:element name="EmployeeCode" msprop:Generator_ColumnVarNameInTable="columnEmployeeCode" msprop:Generator_ColumnPropNameInRow="EmployeeCode" msprop:Generator_ColumnPropNameInTable="EmployeeCodeColumn" msprop:Generator_UserColumnName="EmployeeCode" type="xs:string" minOccurs="0" />
+              <xs:element name="FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" type="xs:string" minOccurs="0" />
+              <xs:element name="TimeIn" msprop:Generator_ColumnVarNameInTable="columnTimeIn" msprop:Generator_ColumnPropNameInRow="TimeIn" msprop:Generator_ColumnPropNameInTable="TimeInColumn" msprop:Generator_UserColumnName="TimeIn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NatureOfLeave" msprop:Generator_ColumnVarNameInTable="columnNatureOfLeave" msprop:Generator_ColumnPropNameInRow="NatureOfLeave" msprop:Generator_ColumnPropNameInTable="NatureOfLeaveColumn" msprop:Generator_UserColumnName="NatureOfLeave" type="xs:string" minOccurs="0" />
+              <xs:element name="EmployeeRemarks" msprop:Generator_ColumnVarNameInTable="columnEmployeeRemarks" msprop:Generator_ColumnPropNameInRow="EmployeeRemarks" msprop:Generator_ColumnPropNameInTable="EmployeeRemarksColumn" msprop:Generator_UserColumnName="EmployeeRemarks" type="xs:string" minOccurs="0" />
+              <xs:element name="AttendanceDate" msprop:Generator_ColumnVarNameInTable="columnAttendanceDate" msprop:Generator_ColumnPropNameInRow="AttendanceDate" msprop:Generator_ColumnPropNameInTable="AttendanceDateColumn" msprop:Generator_UserColumnName="AttendanceDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="DesigName" msprop:Generator_ColumnVarNameInTable="columnDesigName" msprop:Generator_ColumnPropNameInRow="DesigName" msprop:Generator_ColumnPropNameInTable="DesigNameColumn" msprop:Generator_UserColumnName="DesigName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

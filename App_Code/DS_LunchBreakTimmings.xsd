@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_LunchBreakTimmings" targetNamespace="http://tempuri.org/DS_LunchBreakTimmings.xsd" xmlns:mstns="http://tempuri.org/DS_LunchBreakTimmings.xsd" xmlns="http://tempuri.org/DS_LunchBreakTimmings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_LunchBreakTimmings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DS_LunchBreakTimmings" msprop:Generator_DataSetName="DS_LunchBreakTimmings">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tbl_LunchBreakTimings" msprop:Generator_UserTableName="tbl_LunchBreakTimings" msprop:Generator_RowDeletedName="tbl_LunchBreakTimingsRowDeleted" msprop:Generator_TableClassName="tbl_LunchBreakTimingsDataTable" msprop:Generator_RowChangedName="tbl_LunchBreakTimingsRowChanged" msprop:Generator_RowClassName="tbl_LunchBreakTimingsRow" msprop:Generator_RowChangingName="tbl_LunchBreakTimingsRowChanging" msprop:Generator_RowEvArgName="tbl_LunchBreakTimingsRowChangeEvent" msprop:Generator_RowEvHandlerName="tbl_LunchBreakTimingsRowChangeEventHandler" msprop:Generator_TablePropName="tbl_LunchBreakTimings" msprop:Generator_TableVarName="tabletbl_LunchBreakTimings" msprop:Generator_RowDeletingName="tbl_LunchBreakTimingsRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SrNo" msprop:Generator_UserColumnName="SrNo" msprop:Generator_ColumnPropNameInRow="SrNo" msprop:Generator_ColumnVarNameInTable="columnSrNo" msprop:Generator_ColumnPropNameInTable="SrNoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="emp_code" msprop:Generator_UserColumnName="emp_code" msprop:Generator_ColumnPropNameInRow="emp_code" msprop:Generator_ColumnVarNameInTable="columnemp_code" msprop:Generator_ColumnPropNameInTable="emp_codeColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="full_name" msprop:Generator_UserColumnName="full_name" msprop:Generator_ColumnPropNameInRow="full_name" msprop:Generator_ColumnVarNameInTable="columnfull_name" msprop:Generator_ColumnPropNameInTable="full_nameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="dept_name" msprop:Generator_UserColumnName="dept_name" msprop:Generator_ColumnPropNameInRow="dept_name" msprop:Generator_ColumnVarNameInTable="columndept_name" msprop:Generator_ColumnPropNameInTable="dept_nameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="desig_name" msprop:Generator_UserColumnName="desig_name" msprop:Generator_ColumnPropNameInRow="desig_name" msprop:Generator_ColumnVarNameInTable="columndesig_name" msprop:Generator_ColumnPropNameInTable="desig_nameColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="atten_date" msprop:Generator_UserColumnName="atten_date" msprop:Generator_ColumnPropNameInRow="atten_date" msprop:Generator_ColumnVarNameInTable="columnatten_date" msprop:Generator_ColumnPropNameInTable="atten_dateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="break_out_time" msprop:Generator_UserColumnName="break_out_time" msprop:Generator_ColumnPropNameInRow="break_out_time" msprop:Generator_ColumnVarNameInTable="columnbreak_out_time" msprop:Generator_ColumnPropNameInTable="break_out_timeColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="break_in_time" msdata:Caption="break_out_time" msprop:Generator_UserColumnName="break_in_time" msprop:Generator_ColumnPropNameInRow="break_in_time" msprop:Generator_ColumnVarNameInTable="columnbreak_in_time" msprop:Generator_ColumnPropNameInTable="break_in_timeColumn" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

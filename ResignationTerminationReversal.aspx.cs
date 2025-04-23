@@ -131,12 +131,12 @@ public partial class ResignationTerminationReversal : System.Web.UI.Page
                     }
                     else
                     {
-                        drawMsgBox("Save Failed!", 2);
+                        drawMsgBox(updateStatus.ToString(), 2);
                     }
                 }
                 else
                 {
-                    drawMsgBox("Save Failed!", 2);
+                    drawMsgBox(sentToERP.ToString(), 2);
                 }
             }
         }
@@ -171,8 +171,9 @@ public partial class ResignationTerminationReversal : System.Web.UI.Page
                 bllObj.HRRemarks = hrRemarks;
                 GetHOD(bllObj.EmployeeCode);
 
+                string sentToERP = bllObj.ReverseEmployeeResignationTerminationInERP(bllObj);
                 // Attempt to reverse resignation/termination in ERP
-                if (bllObj.ReverseEmployeeResignationTerminationInERP(bllObj) == "T")
+                if (sentToERP == "T")
                 {
                     bllObj.ResignationTerminationReversalUpdate(bllObj);
 
@@ -223,7 +224,7 @@ public partial class ResignationTerminationReversal : System.Web.UI.Page
                 }
                 else
                 {
-                    drawMsgBox("Save Failed!", 2);
+                    drawMsgBox(sentToERP.ToString(), 2);
                 }
             }
         }

@@ -1498,11 +1498,11 @@ public partial class EmployeeLeavesAdjustment : System.Web.UI.Page
 
                                 if (typeGrid.Text == "RES")
                                 {
-                                    nAlreadyIn = bllEmpLeaves.EmployeeLeavesModifyHR(bllEmpLeaves);
+                                    //nAlreadyIn = bllEmpLeaves.EmployeeLeavesModifyHR(bllEmpLeaves);
                                 }
                                 else if (typeGrid.Text == "LWP")
                                 {
-                                    nAlreadyIn = bllEmpLeaves.EmployeeLWPModifyHR(bllEmpLeaves);
+                                    //nAlreadyIn = bllEmpLeaves.EmployeeLWPModifyHR(bllEmpLeaves);
                                 }
                                 else if (typeGrid.Text == "HDAY")
                                 {

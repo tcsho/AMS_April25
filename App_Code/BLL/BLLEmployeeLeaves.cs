@@ -84,7 +84,7 @@ public class BLLEmployeeLeaves
     public string BODRemarks { get { return bODRemarks; } set { bODRemarks = value; } }
     public int BODAPVBy { get { return bODAPVBy; } set { bODAPVBy = value; } }
     public DateTime BODAPVOn { get { return bODAPVOn; } set { bODAPVOn = value; } }
-    
+    public int Att_Id { get; set; }
     #endregion
 
     #region 'Start Executaion Methods'

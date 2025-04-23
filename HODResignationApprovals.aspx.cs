@@ -168,6 +168,7 @@ public partial class HODResignationApprovals : System.Web.UI.Page
             if (isSelected)
             {
                 bool isOK = false;
+                string sentToERP = "";
                 foreach (GridViewRow gvRow in gvResignationUnApproved.Rows)
                 {
                     txtReasonInner = (TextBox)gvRow.FindControl("txtReason");
@@ -211,9 +212,7 @@ public partial class HODResignationApprovals : System.Web.UI.Page
                                 bllObj.SubmissionDate = submittionDate;
 
                                 //Send data to ERP - start
-
-                                string sentToERP = "";
-
+                                 
                                 if (isApprove)
                                 {
                                     sentToERP = bllObj.EmployeeResignationDataToERP(bllObj); // Approval case returns "T"
@@ -328,7 +327,8 @@ public partial class HODResignationApprovals : System.Web.UI.Page
                 }
                 else
                 {
-                    drawMsgBox("An error has occurred. Please contact the IT department for assistance!", 2);
+                    //drawMsgBox("An error has occurred. Please contact the IT department for assistance!", 2);
+                    drawMsgBox(sentToERP.ToString(), 2);
                     ViewState["dtUnApprovedResignation"] = null;
                     ViewState["dtApprovedResignation"] = null;
                     ddlEmp.SelectedValue = "0";

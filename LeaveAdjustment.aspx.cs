@@ -237,6 +237,45 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             else
             {
                 drawMsgBox("A valid 'From Date' must be provided.", 1);
+                return;
+            }
+
+            int numberOfDays = 0;
+            if (leaveFromDate.HasValue && leaveToDate.HasValue)
+            {
+                TimeSpan difference = leaveToDate.Value - leaveFromDate.Value;
+                numberOfDays = difference.Days + 1; // Adding 1 to include both start and end dates
+            }
+
+            Label lblBalCasual = (Label)selectedRow.FindControl("lblBalCasual");
+            Label lblBalAnnual = (Label)selectedRow.FindControl("lblBalAnnual");
+
+            // Check if labels are found, then extract values
+            decimal balCasual = lblBalCasual != null ? Convert.ToDecimal(lblBalCasual.Text) : 0;
+            decimal balAnnual = lblBalAnnual != null ? Convert.ToDecimal(lblBalAnnual.Text) : 0;
+
+            int currentMonth = DateTime.Now.Month;  // Returns an integer from 1 to 12
+            int currentYear = DateTime.Now.Year;    // Returns the 4-digit year
+
+            if (hrLeaveType == 6072)//CL
+            {
+                if (numberOfDays != 1)
+                {
+                    drawMsgBox("One leave can be taken as Casual leave.", 1);
+                    return;
+                }
+
+                UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+            }
+            else if (hrLeaveType == 6071)//AL
+            {
+                if (numberOfDays < 3)
+                {
+                    drawMsgBox("Annual leave must be taken consecutively and last for more than 3 days.", 1);
+                    return;
+                } 
+
+                UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
             }
 
             // Access the HiddenField in the selected row
@@ -250,6 +289,206 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             }
         }
     }
+    public void UpdateLeaveBalanceAL(int employeeCode, int year, string pMonth, decimal tAnnualLeave)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["tcs_invConnectionString"].ConnectionString;
+
+        // Query to get the current TAnnulaLeave balance
+        string selectQuery = @"
+        SELECT TAnnulaLeave
+        FROM EmpLeaveBalance4LeaveAdjustment
+        WHERE year = @Year AND pmonth = @PMonth AND employeecode = @EmployeeCode";
+
+        decimal currentAnnualLeave = 0;
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(selectQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@Year", year);
+                cmd.Parameters.AddWithValue("@PMonth", pMonth);
+                cmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
+
+                try
+                {
+                    conn.Open();
+                    // Execute the query and get the current TAnnulaLeave
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value)
+                    {
+                        currentAnnualLeave = Convert.ToDecimal(result);
+                    }
+                    else
+                    {
+                        // Handle the case where the record doesn't exist or TAnnulaLeave is null
+                        currentAnnualLeave = 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    // You can log the exception message here
+                }
+            }
+        }
+
+        // Calculate the new annual leave balance by subtracting the tAnnualLeave from the current balance
+        decimal newAnnualLeaveBalance = currentAnnualLeave - tAnnualLeave;
+
+        // Query to update the TAnnulaLeave balance
+        string updateQuery = @"
+        UPDATE EmpLeaveBalance4LeaveAdjustment
+        SET TAnnulaLeave = @TAnnulaLeave
+        WHERE year = @Year AND pmonth = @PMonth AND employeecode = @EmployeeCode";
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@TAnnulaLeave", newAnnualLeaveBalance);
+                cmd.Parameters.AddWithValue("@Year", year);
+                cmd.Parameters.AddWithValue("@PMonth", pMonth);
+                cmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
+
+                try
+                {
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        int regionID = 0;
+                        int centerID = 0;
+
+                        // Check if RegionID is available and a valid integer
+                        if (Session["RegionID"] != null && int.TryParse(Session["RegionID"].ToString(), out regionID))
+                        {
+                            regionID = Convert.ToInt32(Session["RegionID"]);
+                        }
+
+                        // Check if CenterID is available and a valid integer
+                        if (Session["CenterID"] != null && int.TryParse(Session["CenterID"].ToString(), out centerID))
+                        {
+                            centerID = Convert.ToInt32(Session["CenterID"]);
+                        }
+
+                        // Bind the GridView again after the update
+                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+                    }
+                    else
+                    {
+                        // Handle case where no rows were affected
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    // You can log the exception message here
+                }
+            }
+        }
+    }
+
+    public void UpdateLeaveBalanceCL(int employeeCode, int year, string pMonth, decimal tCasualLeave)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["tcs_invConnectionString"].ConnectionString;
+
+        // Query to get the current TCasualLeave balance
+        string selectQuery = @"
+        SELECT TCasualLeave
+        FROM EmpLeaveBalance4LeaveAdjustment
+        WHERE year = @Year AND pmonth = @PMonth AND employeecode = @EmployeeCode";
+
+        decimal currentCasualLeave = 0;
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(selectQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@Year", year);
+                cmd.Parameters.AddWithValue("@PMonth", pMonth);
+                cmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
+
+                try
+                {
+                    conn.Open();
+                    // Execute the query and get the current TCasualLeave
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value)
+                    {
+                        currentCasualLeave = Convert.ToDecimal(result);
+                    }
+                    else
+                    {
+                        // Handle the case where the record doesn't exist or TCasualLeave is null
+                        currentCasualLeave = 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    // You can log the exception message here
+                }
+            }
+        }
+
+        // Calculate the new casual leave balance by subtracting the tCasualLeave from the current balance
+        decimal newCasualLeaveBalance = currentCasualLeave - tCasualLeave;
+
+        // Query to update the TCasualLeave balance
+        string updateQuery = @"
+        UPDATE EmpLeaveBalance4LeaveAdjustment
+        SET TCasualLeave = @TCasualLeave
+        WHERE year = @Year AND pmonth = @PMonth AND employeecode = @EmployeeCode";
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@TCasualLeave", newCasualLeaveBalance);
+                cmd.Parameters.AddWithValue("@Year", year);
+                cmd.Parameters.AddWithValue("@PMonth", pMonth);
+                cmd.Parameters.AddWithValue("@EmployeeCode", employeeCode);
+
+                try
+                {
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        int regionID = 0;
+                        int centerID = 0;
+
+                        // Check if RegionID is available and a valid integer
+                        if (Session["RegionID"] != null && int.TryParse(Session["RegionID"].ToString(), out regionID))
+                        {
+                            regionID = Convert.ToInt32(Session["RegionID"]);
+                        }
+
+                        // Check if CenterID is available and a valid integer
+                        if (Session["CenterID"] != null && int.TryParse(Session["CenterID"].ToString(), out centerID))
+                        {
+                            centerID = Convert.ToInt32(Session["CenterID"]);
+                        }
+
+                        // Bind the GridView again after the update
+                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+                    }
+                    else
+                    {
+                        // Handle case where no rows were affected
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    // You can log the exception message here
+                }
+            }
+        }
+    }
+
     private void UpdateByHr(int hfFinalID, string Remarks, int hrLeaveType, DateTime? leaveFromDate, DateTime? leaveToDate)
     {
         // Update query with all parameters

@@ -194,8 +194,16 @@
                                     <asp:BoundField DataField="EmployeeCode" HeaderText="Employee Code" SortExpression="EmployeeCode" />
                                     <asp:BoundField DataField="FullName" HeaderText="Employee Name" SortExpression="FullName" />
                                     <asp:BoundField DataField="DesigName" HeaderText="Designation" SortExpression="DesigName" />
-                                    <asp:BoundField DataField="balCasual" SortExpression="balCasual" HeaderText="CL"></asp:BoundField>
-                                    <asp:BoundField DataField="balAnnual" SortExpression="balAnnual" HeaderText="AL"></asp:BoundField>
+                                    <asp:TemplateField HeaderText="CL">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblBalCasual" runat="server" Text='<%# Eval("balCasual") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="AL">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblBalAnnual" runat="server" Text='<%# Eval("balAnnual") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="LeaveType" HeaderText="Leave Type" SortExpression="LeaveType" />
                                     <asp:BoundField DataField="LeaveDays" HeaderText="Leave Days" SortExpression="LeaveDays" />
                                     <asp:BoundField DataField="LeaveFrom" SortExpression="LeaveFrom" HeaderText="Leave From" DataFormatString="{0:dddd dd/MM/yyyy}"

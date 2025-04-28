@@ -259,23 +259,38 @@ public partial class LeaveAdjustment : System.Web.UI.Page
 
             if (hrLeaveType == 6072)//CL
             {
+                if (balCasual == 0)
+                {
+                    drawMsgBox("Casual leave cannot be taken if the casual leave balance is zero.", 1);
+                    return;
+                }
+
                 if (numberOfDays != 1)
                 {
                     drawMsgBox("One leave can be taken as Casual leave.", 1);
                     return;
                 }
 
-                UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+                //UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+                UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
             }
             else if (hrLeaveType == 6071)//AL
             {
+                if (balAnnual == 0)
+                {
+                    drawMsgBox("Annual leave cannot be taken if the Annual leave balance is zero.", 1);
+                    return;
+                }
+
                 if (numberOfDays < 3)
                 {
                     drawMsgBox("Annual leave must be taken consecutively and last for more than 3 days.", 1);
                     return;
-                } 
+                }
 
-                UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+                //UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+                UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
+
             }
 
             // Access the HiddenField in the selected row

@@ -159,7 +159,8 @@ public class _DALUser
         }
         catch (Exception _exception)
         {
-            throw _exception;
+            //throw _exception;
+            throw new ApplicationException("An error occurred in the DAL.", _exception);
         }
         finally
         {

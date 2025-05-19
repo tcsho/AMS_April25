@@ -3668,7 +3668,7 @@ public partial class EmployeeLeavesSubmissions : System.Web.UI.Page
             }
             else
             {
-                drawMsgBox("Please Consider Sunday attatchment while submitting annual leaves", 3);
+                drawMsgBox("Please consider weekend attachments while submitting annual leaves", 3);
 
             }
 

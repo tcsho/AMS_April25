@@ -566,5 +566,54 @@ public class DALBase
             _ddl.Items.Insert(0, new ListItem("Select", "0"));
     }
 
+    public DataSet get_KPITemplate()
+
+    {
+
+        SqlConnection oConnection = GetConnection();
+
+        // build the command
+
+        SqlCommand oCommand = new SqlCommand("KPITemplateSelectAll", oConnection);
+
+        oCommand.CommandType = CommandType.StoredProcedure;
+
+        // Adapter and DataSet
+
+        SqlDataAdapter oAdapter = new SqlDataAdapter();
+
+        oAdapter.SelectCommand = oCommand;
+
+        DataSet oDataSet = new DataSet();
+
+        try
+
+        {
+
+            oConnection.Open();
+
+            oAdapter.Fill(oDataSet, "obj");
+
+            return oDataSet;
+
+        }
+
+        catch (Exception oException)
+
+        {
+
+            throw oException;
+
+        }
+
+        finally
+
+        {
+
+            oConnection.Close();
+
+        }
+
+    }
 
 }

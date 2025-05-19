@@ -107,15 +107,14 @@
                 var currentYear = today.getFullYear();
 
                 // Calculate the 26th of the last month
-                //var lastMonth = new Date(currentYear, currentMonth - 1, 26);
-                var lastMonth = new Date(currentYear, currentMonth - 1, 22);
+                var lastMonth = new Date(currentYear, currentMonth - 1, 26);
 
                 // Calculate the 25th of the current month
                 var currentMonthEnd = new Date(currentYear, currentMonth, 25);
 
                 // Initialize the datepicker
                 $('.datepicker').datepicker({
-                    dateFormat: "mm/dd/yy",
+                    dateFormat: "dd/mm/yy",
                     minDate: lastMonth,    // Enable from 26th of last month
                     maxDate: currentMonthEnd  // Enable until 25th of current month
                 });
@@ -178,12 +177,15 @@
                 <div class="body_content fullrow">
                     <%--Resigned Employee Listing Start--%>
                     <div class="panel" id="div_leaveRequests" runat="server">
-                        <div class="panel_header">Leave Adjustment Listing</div>
+                        <div class="panel_header" style="display: flex; justify-content: space-between; align-items: center;">
+                            Leave Adjustment Listing
+    <asp:Button ID="btnSubmitSelected" runat="server" Text="Submit" OnClick="btnSubmitSelected_Click" CssClass="btn btn-primary" />
+                        </div>
                         <!--end panel_head-->
                         <div class="panel_body">
                             <!--Paste Grid code here-->
                             <asp:GridView ID="gvLeaveAdjustment" runat="server" AutoGenerateColumns="False"
-                                CssClass="table table-bordered" OnRowCommand="gvLeaveAdjustment_RowCommand" OnRowDataBound="gvLeaveAdjustment_RowDataBound" EmptyDataText="No leave adjustments found.">
+                                CssClass="table table-bordered" OnRowDataBound="gvLeaveAdjustment_RowDataBound" EmptyDataText="No leave adjustments found.">
                                 <Columns>
                                     <asp:BoundField DataField="FinalID" HeaderText="FinalID" SortExpression="FinalID" Visible="False" />
                                     <asp:TemplateField>
@@ -214,13 +216,27 @@
                                         HtmlEncode="False">
                                         <ItemStyle Width="70px" />
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="EmpReason" HeaderText="Leave Reason" SortExpression="EmpReason" />
-                                    <asp:TemplateField HeaderText="HR Leave Type">
+                                    <%--<asp:BoundField DataField="EmpReason" HeaderText="Leave Reason" SortExpression="EmpReason" />--%>
+                                    <asp:BoundField DataField="HR_LeaveDays" HeaderText="HR Leave Days" SortExpression="HR_LeaveDays" />
+                                    <%--       <asp:TemplateField HeaderText="HR Leave Type">
                                         <ItemTemplate>
                                             <asp:DropDownList ID="ddlLeaveType" runat="server" CssClass="form-control">
                                                 <asp:ListItem Text="Select" Value="-1" />
                                                 <asp:ListItem Text="Annual Leave" Value="6071" />
                                                 <asp:ListItem Text="Casual Leave" Value="6072" />
+                                                <asp:ListItem Text="Half Casual Leave" Value="6072" />
+                                                <asp:ListItem Text="Remove" Value="9999" />
+                                            </asp:DropDownList>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="150px" />
+                                    </asp:TemplateField>--%>
+                                    <asp:TemplateField HeaderText="HR Leave Type">
+                                        <ItemTemplate>
+                                            <asp:DropDownList ID="ddlLeaveType" runat="server" CssClass="form-control">
+                                                <asp:ListItem Text="Select" Value="-1" />
+                                                <asp:ListItem Text="AL" Value="6071" />
+                                                <asp:ListItem Text="CL" Value="6072" />
+                                                <asp:ListItem Text="Half CL" Value="9000" />
                                                 <asp:ListItem Text="Remove" Value="9999" />
                                             </asp:DropDownList>
                                         </ItemTemplate>
@@ -247,9 +263,15 @@
                                         </ItemTemplate>
                                         <ItemStyle Width="400px" />
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Action">
+                                    <%--<asp:TemplateField HeaderText="Action">
                                         <ItemTemplate>
                                             <asp:Button ID="btnSubmitByHr" CommandArgument="<%# Container.DataItemIndex %>" runat="server" CommandName="submitbyhr" Text="Submit" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>--%>
+                                    <asp:TemplateField HeaderText="Action">
+                                        <ItemTemplate>
+                                            <!-- Replace Button with Checkbox -->
+                                            <asp:CheckBox ID="chkSelect" runat="server" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

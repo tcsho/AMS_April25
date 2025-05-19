@@ -21,7 +21,15 @@ public partial class Login : System.Web.UI.Page
         objbll.User_Name = text_login.Text;
         objbll.Password = text_password.Text;
 
-        dtUsers = objbll.UserFetch(objbll);
+        try
+        {
+            dtUsers = objbll.UserFetch(objbll);
+        }
+        catch (ApplicationException ex)
+        {
+            Response.Redirect("~/ServerError.aspx");
+        }
+         
         if (dtUsers != null && dtUsers.Rows.Count > 0)
         {
             {

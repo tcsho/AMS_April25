@@ -146,164 +146,333 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             TextBox txtLeaveTo = (TextBox)e.Row.FindControl("HR_LeaveTo");
             TextBox txtRemarks = (TextBox)e.Row.FindControl("txtRemarks");
 
+            bool allConditionsMet = true;
+
+            ddlLeaveType.BackColor = System.Drawing.Color.Chartreuse;
+            txtLeaveFrom.BackColor = System.Drawing.Color.Chartreuse;
+            txtLeaveTo.BackColor = System.Drawing.Color.Chartreuse;
+            txtRemarks.BackColor = System.Drawing.Color.Chartreuse;
+
             if (ddlLeaveType != null)
             {
                 string leaveType = rowView["HR_LeaveType_Id"].ToString();
                 ListItem selected = ddlLeaveType.Items.FindByValue(leaveType);
-                if (selected != null) ddlLeaveType.SelectedValue = selected.Value;
+                if (selected != null)
+                {
+                    ddlLeaveType.SelectedValue = selected.Value;
+                }
+                else
+                {
+                    allConditionsMet = false;
+                }
             }
 
             if (txtLeaveFrom != null && rowView["HR_LeaveFrom"] != DBNull.Value)
             {
-                txtLeaveFrom.Text = Convert.ToDateTime(rowView["HR_LeaveFrom"]).ToString("MM/dd/yyyy");
+                txtLeaveFrom.Text = Convert.ToDateTime(rowView["HR_LeaveFrom"]).ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                allConditionsMet = false;
             }
 
             if (txtLeaveTo != null && rowView["HR_LeaveTo"] != DBNull.Value)
             {
-                txtLeaveTo.Text = Convert.ToDateTime(rowView["HR_LeaveTo"]).ToString("MM/dd/yyyy");
+                txtLeaveTo.Text = Convert.ToDateTime(rowView["HR_LeaveTo"]).ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                allConditionsMet = false;
             }
 
             if (txtRemarks != null && rowView["HRComment"] != DBNull.Value)
             {
                 txtRemarks.Text = rowView["HRComment"].ToString();
             }
+            else
+            {
+                allConditionsMet = false;
+            }
+
+            if (allConditionsMet)
+            {
+                e.Row.BackColor = System.Drawing.Color.LightGreen;  // You can change to any color
+            }
         }
     }
-    protected void gvLeaveAdjustment_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void btnSubmitSelected_Click(object sender, EventArgs e)
     {
-        if (e.CommandName == "submitbyhr")
+        foreach (GridViewRow row in gvLeaveAdjustment.Rows)
         {
-            // Get the Row Index where the button was clicked
-            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            // Find the checkbox in the current row
+            CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
 
-            // Access the data from the selected row
-            string employeeCode = gvLeaveAdjustment.Rows[rowIndex].Cells[2].Text;
-
-            GridViewRow selectedRow = gvLeaveAdjustment.Rows[rowIndex];
-            TextBox txtRemarks = (TextBox)selectedRow.FindControl("txtRemarks");
-            string hodRemarks = txtRemarks != null ? txtRemarks.Text : string.Empty;
-
-            if (hodRemarks == string.Empty)
+            // Check if the checkbox is selected
+            if (chkSelect != null && chkSelect.Checked)
             {
-                drawMsgBox("Please enter valid 'HR Remarks'.", 1);
-                return;
-            }
+                // Get the necessary controls and data from the selected row
+                TextBox txtRemarks = (TextBox)row.FindControl("txtRemarks");
+                DropDownList ddlLeaveType = (DropDownList)row.FindControl("ddlLeaveType");
+                TextBox txtLeaveFrom = (TextBox)row.FindControl("HR_LeaveFrom");
+                TextBox txtLeaveTo = (TextBox)row.FindControl("HR_LeaveTo");
+                Label lblBalCasual = (Label)row.FindControl("lblBalCasual");
+                Label lblBalAnnual = (Label)row.FindControl("lblBalAnnual");
+                HiddenField hfFinalID = (HiddenField)row.FindControl("hfFinalID");
 
-            // Get HR Leave Type (from DropDownList)
-            DropDownList ddlLeaveType = (DropDownList)selectedRow.FindControl("ddlLeaveType");
-            int hrLeaveType = ddlLeaveType != null ? Convert.ToInt32(ddlLeaveType.SelectedValue) : -1;
-
-            if (ddlLeaveType == null || hrLeaveType == -1)
-            {
-                // Show error message or return early 
-                drawMsgBox("Please select a valid 'Leave Type'.", 1);
-                return; // or set a flag for validation failure
-            }
-
-            // Get Leave From Date
-            TextBox txtLeaveFrom = (TextBox)selectedRow.FindControl("HR_LeaveFrom");
-            DateTime leaveFrom;
-            DateTime? leaveFromDate = null;
-
-            if (txtLeaveFrom != null && DateTime.TryParseExact(
-        txtLeaveFrom.Text.Trim(),
-        "MM/dd/yyyy",  // or "dd/MM/yyyy" depending on your format
-        System.Globalization.CultureInfo.InvariantCulture,
-        System.Globalization.DateTimeStyles.None,
-        out leaveFrom))
-            {
-                leaveFromDate = leaveFrom;
-            }
-            else
-            {
-                drawMsgBox("A valid 'From Date' must be provided.", 1);
-                return;
-            }
-
-            // Get Leave To Date
-            TextBox txtLeaveTo = (TextBox)selectedRow.FindControl("HR_LeaveTo");
-            DateTime leaveTo;
-            DateTime? leaveToDate = null;
-
-            if (txtLeaveTo != null && DateTime.TryParseExact(
-        txtLeaveTo.Text.Trim(),
-        "MM/dd/yyyy",  // or "dd/MM/yyyy" depending on your format
-        System.Globalization.CultureInfo.InvariantCulture,
-        System.Globalization.DateTimeStyles.None,
-        out leaveTo))
-            {
-                leaveToDate = leaveTo;
-            }
-            else
-            {
-                drawMsgBox("A valid 'From Date' must be provided.", 1);
-                return;
-            }
-
-            int numberOfDays = 0;
-            if (leaveFromDate.HasValue && leaveToDate.HasValue)
-            {
-                TimeSpan difference = leaveToDate.Value - leaveFromDate.Value;
-                numberOfDays = difference.Days + 1; // Adding 1 to include both start and end dates
-            }
-
-            Label lblBalCasual = (Label)selectedRow.FindControl("lblBalCasual");
-            Label lblBalAnnual = (Label)selectedRow.FindControl("lblBalAnnual");
-
-            // Check if labels are found, then extract values
-            decimal balCasual = lblBalCasual != null ? Convert.ToDecimal(lblBalCasual.Text) : 0;
-            decimal balAnnual = lblBalAnnual != null ? Convert.ToDecimal(lblBalAnnual.Text) : 0;
-
-            int currentMonth = DateTime.Now.Month;  // Returns an integer from 1 to 12
-            int currentYear = DateTime.Now.Year;    // Returns the 4-digit year
-
-            if (hrLeaveType == 6072)//CL
-            {
-                if (balCasual == 0)
+                // Perform necessary validation and data processing
+                if (txtRemarks != null && ddlLeaveType != null && txtLeaveFrom != null && txtLeaveTo != null && hfFinalID != null)
                 {
-                    drawMsgBox("Casual leave cannot be taken if the casual leave balance is zero.", 1);
-                    return;
+                    string hodRemarks = txtRemarks.Text;
+                    if (string.IsNullOrEmpty(hodRemarks))
+                    {
+                        drawMsgBox("Please enter valid 'HR Remarks'.", 1);
+                        return;
+                    }
+
+                    // Get HR Leave Type (from DropDownList)
+                    int hrLeaveType = Convert.ToInt32(ddlLeaveType.SelectedValue);
+                     
+                    if (hrLeaveType == -1)
+                    {
+                        // Show error message or return early 
+                        drawMsgBox("Please select a valid 'Leave Type'.", 1);
+                        return; // or set a flag for validation failure
+                    }
+
+                    // Get Leave From Date
+                    DateTime leaveFrom;
+                    DateTime? leaveFromDate = null;
+
+                    if (DateTime.TryParseExact(txtLeaveFrom.Text.Trim(), "dd/MM/yyyy",
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out leaveFrom))
+                    {
+                        leaveFromDate = leaveFrom;
+                    }
+                    else
+                    {
+                        drawMsgBox("A valid 'From Date' must be provided.", 1);
+                        return;
+                    }
+
+                    // Get Leave To Date
+                    DateTime leaveTo;
+                    DateTime? leaveToDate = null;
+
+                    if (DateTime.TryParseExact(txtLeaveTo.Text.Trim(), "dd/MM/yyyy",
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out leaveTo))
+                    {
+                        leaveToDate = leaveTo;
+                    }
+                    else
+                    {
+                        drawMsgBox("A valid 'To Date' must be provided.", 1);
+                        return;
+                    }
+
+                    // Calculate the number of days
+                    decimal numberOfDays = 0;
+                    if (leaveFromDate.HasValue && leaveToDate.HasValue)
+                    {
+                        TimeSpan difference = leaveToDate.Value - leaveFromDate.Value;
+                        numberOfDays = difference.Days + 1; // Adding 1 to include both start and end dates
+                    }
+
+                    // Check if labels are found, then extract values
+                    decimal balCasual = lblBalCasual != null ? Convert.ToDecimal(lblBalCasual.Text) : 0;
+                    decimal balAnnual = lblBalAnnual != null ? Convert.ToDecimal(lblBalAnnual.Text) : 0;
+
+                    string currentYearMonth = DateTime.Now.ToString("yyyyMM"); 
+                    int currentYear = DateTime.Now.Year;    // Returns the 4-digit year
+
+                    // Check Leave Type and Apply Logic
+                    if (hrLeaveType == 6072 || hrLeaveType == 9000) // Casual Leave (CL) OR Half Casual Leave (CL)
+                    {
+                        if (balCasual == 0)
+                        {
+                            drawMsgBox("Casual leave cannot be taken if the casual leave balance is zero.", 1);
+                            return;
+                        }
+
+                        if (numberOfDays != 1)
+                        {
+                            drawMsgBox("One leave can be taken as Casual leave.", 1);
+                            return;
+                        }
+
+                        if (hrLeaveType == 9000)
+                        {
+                            numberOfDays = 0.5m;
+                        }
+
+                        // Update Casual Leave Balance
+                        UpdateLeaveBalanceCL(int.Parse(row.Cells[2].Text), currentYear, currentYearMonth, numberOfDays);
+                    }
+                    else if (hrLeaveType == 6071) // Annual Leave (AL)
+                    {
+                        if (balAnnual == 0)
+                        {
+                            drawMsgBox("Annual leave cannot be taken if the Annual leave balance is zero.", 1);
+                            return;
+                        }
+
+                        if (numberOfDays < 3)
+                        {
+                            drawMsgBox("Annual leave must be taken consecutively and last for more than 3 days.", 1);
+                            return;
+                        }
+
+                        // Update Annual Leave Balance
+                        UpdateLeaveBalanceAL(int.Parse(row.Cells[2].Text), currentYear, currentYearMonth, numberOfDays);
+                    }
+
+                    // Access the HiddenField in the selected row
+                    int finalID = Convert.ToInt32(hfFinalID.Value);
+
+                    // Call UpdateByHr with the new parameters
+                    UpdateByHr(finalID, hodRemarks, hrLeaveType, leaveFromDate, leaveToDate, numberOfDays);
                 }
-
-                if (numberOfDays != 1)
-                {
-                    drawMsgBox("One leave can be taken as Casual leave.", 1);
-                    return;
-                }
-
-                //UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
-                UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
-            }
-            else if (hrLeaveType == 6071)//AL
-            {
-                if (balAnnual == 0)
-                {
-                    drawMsgBox("Annual leave cannot be taken if the Annual leave balance is zero.", 1);
-                    return;
-                }
-
-                if (numberOfDays < 3)
-                {
-                    drawMsgBox("Annual leave must be taken consecutively and last for more than 3 days.", 1);
-                    return;
-                }
-
-                //UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
-                UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
-
-            }
-
-            // Access the HiddenField in the selected row
-            HiddenField hfFinalID = (HiddenField)gvLeaveAdjustment.Rows[rowIndex].FindControl("hfFinalID");
-            if (hfFinalID != null)
-            {
-                int finalID = Convert.ToInt32(hfFinalID.Value);
-
-                // Call UpdateByHr with the new parameters
-                UpdateByHr(finalID, hodRemarks, hrLeaveType, leaveFromDate, leaveToDate);
             }
         }
     }
+    //protected void gvLeaveAdjustment_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    if (e.CommandName == "submitbyhr")
+    //    {
+    //        // Get the Row Index where the button was clicked
+    //        int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    //        // Access the data from the selected row
+    //        string employeeCode = gvLeaveAdjustment.Rows[rowIndex].Cells[2].Text;
+
+    //        GridViewRow selectedRow = gvLeaveAdjustment.Rows[rowIndex];
+    //        TextBox txtRemarks = (TextBox)selectedRow.FindControl("txtRemarks");
+    //        string hodRemarks = txtRemarks != null ? txtRemarks.Text : string.Empty;
+
+    //        if (hodRemarks == string.Empty)
+    //        {
+    //            drawMsgBox("Please enter valid 'HR Remarks'.", 1);
+    //            return;
+    //        }
+
+    //        // Get HR Leave Type (from DropDownList)
+    //        DropDownList ddlLeaveType = (DropDownList)selectedRow.FindControl("ddlLeaveType");
+    //        int hrLeaveType = ddlLeaveType != null ? Convert.ToInt32(ddlLeaveType.SelectedValue) : -1;
+
+    //        if (ddlLeaveType == null || hrLeaveType == -1)
+    //        {
+    //            // Show error message or return early 
+    //            drawMsgBox("Please select a valid 'Leave Type'.", 1);
+    //            return; // or set a flag for validation failure
+    //        }
+
+    //        // Get Leave From Date
+    //        TextBox txtLeaveFrom = (TextBox)selectedRow.FindControl("HR_LeaveFrom");
+    //        DateTime leaveFrom;
+    //        DateTime? leaveFromDate = null;
+
+    //        if (txtLeaveFrom != null && DateTime.TryParseExact(
+    //    txtLeaveFrom.Text.Trim(),
+    //    "MM/dd/yyyy",  // or "dd/MM/yyyy" depending on your format
+    //    System.Globalization.CultureInfo.InvariantCulture,
+    //    System.Globalization.DateTimeStyles.None,
+    //    out leaveFrom))
+    //        {
+    //            leaveFromDate = leaveFrom;
+    //        }
+    //        else
+    //        {
+    //            drawMsgBox("A valid 'From Date' must be provided.", 1);
+    //            return;
+    //        }
+
+    //        // Get Leave To Date
+    //        TextBox txtLeaveTo = (TextBox)selectedRow.FindControl("HR_LeaveTo");
+    //        DateTime leaveTo;
+    //        DateTime? leaveToDate = null;
+
+    //        if (txtLeaveTo != null && DateTime.TryParseExact(
+    //    txtLeaveTo.Text.Trim(),
+    //    "MM/dd/yyyy",  // or "dd/MM/yyyy" depending on your format
+    //    System.Globalization.CultureInfo.InvariantCulture,
+    //    System.Globalization.DateTimeStyles.None,
+    //    out leaveTo))
+    //        {
+    //            leaveToDate = leaveTo;
+    //        }
+    //        else
+    //        {
+    //            drawMsgBox("A valid 'From Date' must be provided.", 1);
+    //            return;
+    //        }
+
+    //        int numberOfDays = 0;
+    //        if (leaveFromDate.HasValue && leaveToDate.HasValue)
+    //        {
+    //            TimeSpan difference = leaveToDate.Value - leaveFromDate.Value;
+    //            numberOfDays = difference.Days + 1; // Adding 1 to include both start and end dates
+    //        }
+
+    //        Label lblBalCasual = (Label)selectedRow.FindControl("lblBalCasual");
+    //        Label lblBalAnnual = (Label)selectedRow.FindControl("lblBalAnnual");
+
+    //        // Check if labels are found, then extract values
+    //        decimal balCasual = lblBalCasual != null ? Convert.ToDecimal(lblBalCasual.Text) : 0;
+    //        decimal balAnnual = lblBalAnnual != null ? Convert.ToDecimal(lblBalAnnual.Text) : 0;
+
+    //        int currentMonth = DateTime.Now.Month;  // Returns an integer from 1 to 12
+    //        int currentYear = DateTime.Now.Year;    // Returns the 4-digit year
+
+    //        if (hrLeaveType == 6072)//CL
+    //        {
+    //            if (balCasual == 0)
+    //            {
+    //                drawMsgBox("Casual leave cannot be taken if the casual leave balance is zero.", 1);
+    //                return;
+    //            }
+
+    //            if (numberOfDays != 1)
+    //            {
+    //                drawMsgBox("One leave can be taken as Casual leave.", 1);
+    //                return;
+    //            }
+
+    //            //UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+    //            UpdateLeaveBalanceCL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
+    //        }
+    //        else if (hrLeaveType == 6071)//AL
+    //        {
+    //            if (balAnnual == 0)
+    //            {
+    //                drawMsgBox("Annual leave cannot be taken if the Annual leave balance is zero.", 1);
+    //                return;
+    //            }
+
+    //            if (numberOfDays < 3)
+    //            {
+    //                drawMsgBox("Annual leave must be taken consecutively and last for more than 3 days.", 1);
+    //                return;
+    //            }
+
+    //            //UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, currentMonth.ToString(), numberOfDays);
+    //            UpdateLeaveBalanceAL(int.Parse(employeeCode), currentYear, "202504", numberOfDays);
+
+    //        }
+
+    //        // Access the HiddenField in the selected row
+    //        HiddenField hfFinalID = (HiddenField)gvLeaveAdjustment.Rows[rowIndex].FindControl("hfFinalID");
+    //        if (hfFinalID != null)
+    //        {
+    //            int finalID = Convert.ToInt32(hfFinalID.Value);
+
+    //            // Call UpdateByHr with the new parameters
+    //            UpdateByHr(finalID, hodRemarks, hrLeaveType, leaveFromDate, leaveToDate);
+    //        }
+    //    }
+    //}
     public void UpdateLeaveBalanceAL(int employeeCode, int year, string pMonth, decimal tAnnualLeave)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["tcs_invConnectionString"].ConnectionString;
@@ -504,13 +673,19 @@ public partial class LeaveAdjustment : System.Web.UI.Page
         }
     }
 
-    private void UpdateByHr(int hfFinalID, string Remarks, int hrLeaveType, DateTime? leaveFromDate, DateTime? leaveToDate)
+    private void UpdateByHr(int hfFinalID, string Remarks, int hrLeaveType, DateTime? leaveFromDate, DateTime? leaveToDate, decimal LeaveDays)
     {
+        if (Session["UserName"] == null)
+        {
+            Response.Redirect("~/login.aspx");
+        }
+
         // Update query with all parameters
         string updateQuery = "UPDATE LeavesUploadERP " +
                              "SET HR_LeaveType_Id = @HR_LeaveType_Id, " +
                              "HR_LeaveFrom = @HR_LeaveFrom, " +
                              "HR_LeaveTo = @HR_LeaveTo, " +
+                             "HR_LeaveDays = @HR_LeaveDays, " +
                              "HRComment = @HRComment, " +
                              "ModifiedBy = @ModifiedBy " +
                              "WHERE FinalID = @FinalID";  // Ensure FinalID is part of the WHERE clause
@@ -526,6 +701,7 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             command.Parameters.AddWithValue("@HR_LeaveType_Id", hrLeaveType);
             command.Parameters.AddWithValue("@HR_LeaveFrom", (object)leaveFromDate ?? DBNull.Value);
             command.Parameters.AddWithValue("@HR_LeaveTo", (object)leaveToDate ?? DBNull.Value);
+            command.Parameters.AddWithValue("@HR_LeaveDays", (object)LeaveDays ?? DBNull.Value);
             command.Parameters.AddWithValue("@HRComment", (object)Remarks ?? DBNull.Value); // Ensure Remarks is never null
             command.Parameters.AddWithValue("@ModifiedBy", Session["UserName"]);  // Assuming EmployeeCode is stored in Session
             command.Parameters.AddWithValue("@FinalID", hfFinalID);  // Correctly adding FinalID

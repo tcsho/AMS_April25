@@ -84,6 +84,9 @@
         .white-background {
             background: white !important;
         }
+        .alert {
+            padding: 5px;
+        }
     </style>
     <script type="text/javascript">  
         $(document).ready(document_Ready);
@@ -169,6 +172,9 @@
                                     </asp:RadioButtonList>
                                 </div>
                             </div>
+                            <div style="padding: 5px;">
+                                <asp:Label ID="lblRecordCount" runat="server" CssClass="alert alert-info" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +184,7 @@
                     <%--Resigned Employee Listing Start--%>
                     <div class="panel" id="div_leaveRequests" runat="server">
                         <div class="panel_header" style="display: flex; justify-content: space-between; align-items: center;">
-                            Leave Adjustment Listing
+                            Leave Adjustment Listing 
     <asp:Button ID="btnSubmitSelected" runat="server" Text="Submit" OnClick="btnSubmitSelected_Click" CssClass="btn btn-primary" />
                         </div>
                         <!--end panel_head-->

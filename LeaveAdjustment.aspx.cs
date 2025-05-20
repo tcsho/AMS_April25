@@ -124,6 +124,9 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                         // If there is data, bind it
                         gvLeaveAdjustment.DataSource = dt;
                         gvLeaveAdjustment.DataBind();
+
+                        lblRecordCount.Text = "Total Records: " + dt.Rows.Count.ToString();
+                        lblRecordCount.Visible = true;
                     }
                     else
                     {

@@ -84,6 +84,7 @@
         .white-background {
             background: white !important;
         }
+
         .alert {
             padding: 5px;
         }
@@ -171,9 +172,27 @@
                                         <asp:ListItem Text="AL" Value="6071" />
                                     </asp:RadioButtonList>
                                 </div>
-                            </div>
-                            <div style="padding: 5px;">
-                                <asp:Label ID="lblRecordCount" runat="server" CssClass="alert alert-info" />
+                                <div>
+                                    <asp:RadioButtonList ID="rblEmpType" RepeatDirection="Horizontal" CssClass="RadioButtonWidth" runat="server" OnSelectedIndexChanged="rblEmpType_SelectedIndexChanged" AutoPostBack="true">
+                                        <asp:ListItem Text="All" Value="0" />
+                                        <asp:ListItem Text="TCS" Value="1" />
+                                        <asp:ListItem Text="TSS" Value="2" />
+                                    </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:RadioButtonList ID="rblStaffType" RepeatDirection="Horizontal" CssClass="RadioButtonWidth" runat="server" OnSelectedIndexChanged="rblStaffType_SelectedIndexChanged" AutoPostBack="true">
+                                        <asp:ListItem Text="All" Value="0" />
+                                        <asp:ListItem Text="Domestic Staff" Value="1" />
+                                        <asp:ListItem Text="Non Domestic Staff" Value="2" />
+                                    </asp:RadioButtonList>
+                                </div>
+                                <div>
+                                    <asp:RadioButtonList ID="rblattended" RepeatDirection="Horizontal" CssClass="RadioButtonWidth" runat="server" OnSelectedIndexChanged="rblattended_SelectedIndexChanged" AutoPostBack="true">
+                                        <asp:ListItem Text="All" Value="0" />
+                                        <asp:ListItem Text="Attended" Value="1" />
+                                        <asp:ListItem Text="Not Attended" Value="2" />
+                                    </asp:RadioButtonList>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -183,9 +202,16 @@
                 <div class="body_content fullrow">
                     <%--Resigned Employee Listing Start--%>
                     <div class="panel" id="div_leaveRequests" runat="server">
-                        <div class="panel_header" style="display: flex; justify-content: space-between; align-items: center;">
-                            Leave Adjustment Listing 
-    <asp:Button ID="btnSubmitSelected" runat="server" Text="Submit" OnClick="btnSubmitSelected_Click" CssClass="btn btn-primary" />
+                        <div class="panel_header" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; text-align: left;">
+                                Leave Adjustment Listing
+                            </div>
+                            <div style="position: absolute; left: 50%; transform: translateX(-50%);">
+                                <asp:Label ID="lblRecordCount" runat="server" CssClass="alert alert-info" />
+                            </div>
+                            <div style="flex: 1; display: flex; justify-content: flex-end;">
+                                <asp:Button ID="btnSubmitSelected" runat="server" Text="Submit" OnClick="btnSubmitSelected_Click" CssClass="btn btn-primary" />
+                            </div>
                         </div>
                         <!--end panel_head-->
                         <div class="panel_body">

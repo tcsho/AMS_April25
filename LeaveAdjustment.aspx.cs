@@ -18,6 +18,9 @@ public partial class LeaveAdjustment : System.Web.UI.Page
         {
             singleemployee.Visible = false;
             rblLeaveType.SelectedIndex = 0;
+            rblEmpType.SelectedIndex = 0;
+            rblStaffType.SelectedIndex = 0;
+            rblattended.SelectedIndex = 0;
             int regionID = 0;  // Default value if the session is invalid
             int centerID = 0;  // Default value if the session is invalid
 
@@ -33,7 +36,7 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                 centerID = Convert.ToInt32(Session["CenterID"]);
             }
 
-            BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+            BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
         }
     }
     protected void ddlLeaveType_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,7 +72,64 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             centerID = Convert.ToInt32(Session["CenterID"]);
         }
 
-        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
+    }
+    protected void rblEmpType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int regionID = 0;  // Default value if the session is invalid
+        int centerID = 0;  // Default value if the session is invalid
+
+        // Check if RegionID is available and a valid integer
+        if (Session["RegionID"] != null && int.TryParse(Session["RegionID"].ToString(), out regionID))
+        {
+            regionID = Convert.ToInt32(Session["RegionID"]);
+        }
+
+        // Check if CenterID is available and a valid integer
+        if (Session["CenterID"] != null && int.TryParse(Session["CenterID"].ToString(), out centerID))
+        {
+            centerID = Convert.ToInt32(Session["CenterID"]);
+        }
+
+        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
+    }
+    protected void rblStaffType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int regionID = 0;  // Default value if the session is invalid
+        int centerID = 0;  // Default value if the session is invalid
+
+        // Check if RegionID is available and a valid integer
+        if (Session["RegionID"] != null && int.TryParse(Session["RegionID"].ToString(), out regionID))
+        {
+            regionID = Convert.ToInt32(Session["RegionID"]);
+        }
+
+        // Check if CenterID is available and a valid integer
+        if (Session["CenterID"] != null && int.TryParse(Session["CenterID"].ToString(), out centerID))
+        {
+            centerID = Convert.ToInt32(Session["CenterID"]);
+        }
+
+        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
+    }
+    protected void rblattended_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int regionID = 0;  // Default value if the session is invalid
+        int centerID = 0;  // Default value if the session is invalid
+
+        // Check if RegionID is available and a valid integer
+        if (Session["RegionID"] != null && int.TryParse(Session["RegionID"].ToString(), out regionID))
+        {
+            regionID = Convert.ToInt32(Session["RegionID"]);
+        }
+
+        // Check if CenterID is available and a valid integer
+        if (Session["CenterID"] != null && int.TryParse(Session["CenterID"].ToString(), out centerID))
+        {
+            centerID = Convert.ToInt32(Session["CenterID"]);
+        }
+
+        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
     }
     protected void txtUser_TextChanged(object sender, EventArgs e)
     {
@@ -88,9 +148,9 @@ public partial class LeaveAdjustment : System.Web.UI.Page
             centerID = Convert.ToInt32(Session["CenterID"]);
         }
 
-        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
     }
-    private void BindGridView(int regionId, int centerId, string employeecode, int LeaveTypeid)
+    private void BindGridView(int regionId, int centerId, string employeecode, int LeaveTypeid, int empType, int staffType, int isAttended)
     {
         // Clear previous data
         gvLeaveAdjustment.DataSource = null;
@@ -113,6 +173,9 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@EmployeeCode", employeecode);
                 }
                 cmd.Parameters.AddWithValue("@LeaveType_Id", LeaveTypeid);
+                cmd.Parameters.AddWithValue("@empType", empType);
+                cmd.Parameters.AddWithValue("@staffType", staffType);
+                cmd.Parameters.AddWithValue("@isAttended", isAttended);
 
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
@@ -560,7 +623,7 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                         }
 
                         // Bind the GridView again after the update
-                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
                     }
                     else
                     {
@@ -660,7 +723,7 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                         }
 
                         // Bind the GridView again after the update
-                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+                        BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
                     }
                     else
                     {
@@ -737,7 +800,7 @@ public partial class LeaveAdjustment : System.Web.UI.Page
                     }
 
                     // Bind the GridView again after the update
-                    BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue));
+                    BindGridView(regionID, centerID, txtUser.Text.Trim(), Convert.ToInt32(rblLeaveType.SelectedValue), Convert.ToInt32(rblEmpType.SelectedValue), Convert.ToInt32(rblStaffType.SelectedValue), Convert.ToInt32(rblattended.SelectedValue));
 
                     // Show success message
                     drawMsgBox("The leave has been successfully updated!", 1); // Message updated to reflect success

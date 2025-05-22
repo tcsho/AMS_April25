@@ -18,8 +18,8 @@ public partial class Login : System.Web.UI.Page
         BLLUser objbll = new BLLUser();
         DataTable dtUsers = new DataTable();
 
-        objbll.User_Name = text_login.Text;
-        objbll.Password = text_password.Text;
+        objbll.User_Name = text_login.Text.Trim();
+        objbll.Password = text_password.Text.Trim();
 
         try
         {
